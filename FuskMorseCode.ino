@@ -9,16 +9,16 @@
 #define OOK_PIN P5_0 
 #define VCO_PIN P5_2
 
-const int kMessageLength = 128;
+const int kMessageLength = (1<<10);
 const int kAsciiOffset = 49;
-//const int kDotLengthMS = 150;
-const int kDotLengthMS = 1000;
+const int kDotLengthMS = 150;
+//const int kDotLengthMS = 1000;
 const int kDeadSpaceMS = kDotLengthMS;
 const int kDashLengthMS = 3 * kDotLengthMS;
 //bool gUseFSK = false;
 bool gUseFSK = true;
 
-char message[kMessageLength] = "KJ7DME this is Portland State engineering EE517 boat crashing the Willamette for fun and credit   Thank you KK7B Onward through the fog\0";
+char message[kMessageLength] = "KJ7DME this is Portland State engineering EE517 boat crashing the Willamette for fun and credit  Thank you KK7B  Onward through the fog\0";
 
 const char *pMorseCodeHash[] = 
 {
@@ -93,8 +93,8 @@ void setup()
   Serial.begin(9600);
   delay(500);
   Serial.print("\n\n\r");
-  //digitalWrite(OOK_PIN, LOW);   
-  digitalWrite(OOK_PIN, HIGH);   
+  digitalWrite(OOK_PIN, LOW);   
+  //digitalWrite(OOK_PIN, HIGH);   
   digitalWrite(VCO_PIN, LOW);   
   //digitalWrite(VCO_PIN, HIGH);   
 }
@@ -126,7 +126,7 @@ void loop()
     txPin = OOK_PIN;
     Serial.print("OOK TX\n");
   }
-//  gUseFSK = !gUseFSK;
+  gUseFSK = !gUseFSK;
 
   for(i = 0; i < kMessageLength && message[i] != '\0';++i)
   {
@@ -156,6 +156,6 @@ void loop()
 
   Serial.print("\n\r");
  // Serial.flush();
-   delay(20000);
+   delay(5 * 1000);
 //*/
 }
